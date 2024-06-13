@@ -36,3 +36,18 @@ class File_manager:
                 return [Activity(**k) for k in activities_data]
         except FileNotFoundError:
             return []
+        
+    
+class serie(Activity): 
+    def __init__(self,name,type,status,duration,comment,season,episode):
+        Activity.__init__(self,name,type,status,comment)
+        self.duration = duration
+        self.season = season
+        self.episode = episode
+
+
+# Otra idea es crear una clase por cada tipo de obra audiovisual, es decir, crear por series una clase y que se guarde en json propio.
+# Lo mismo con las películas, ya que, sus características son distintas, en series si se encuentra viendo la serie, se va a mostrar el episodio en el que va
+# Por otro lado, para la busqueda se pueden unir los dos diccionarios en sus elementos comunes para tener todos los datos.
+# 
+#  
