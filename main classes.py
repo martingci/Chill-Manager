@@ -12,7 +12,7 @@ class Serie:
     def update_serie(self):
         while True:
             print("\nIngrese el número de la característica que quiere actualizar, tome en cuenta de que esto reemplazará a lo que tenía en esa categoría.")
-            print("1)Actualizar nombre.")
+            print("1) Actualizar nombre.")
             print("2) Actualizar estado de visualización.")
             print("3) Actualizar cantidad de temporadas totales.")
             print("4) Actualizar temporada actual.")
