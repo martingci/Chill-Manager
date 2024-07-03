@@ -65,6 +65,17 @@ class Movie_management: #Agregar aqui funcionalidades de movies
                 return movie
         else:
             return None
+    
+    def delete_movie(self,movie):
+        self.movies.remove(movie)
+        File_manager.save_movie(self.movies)
+        print("Pelicula eliminada correctamente")
+
+    def show_saved_movies(self):
+        for movie in self.movies:
+            print(movie)
+            print("----------")
+    
         
 class Movie:
     def __init__(self,title,status,duration,year,rating,comment):
@@ -75,6 +86,9 @@ class Movie:
         self.rating = rating
         self.comment = comment   
     
+    def __str__(self):
+        return f"Titulo: {self.title}\nEstado: {self.status}\nDuracion: {self.status}\nAño de lanzamiento: {self.year}\nValoracion: {self.rating}\nComentario: {self.comment}"
+
 class Serie_management: #Agregar aqui funcionalidades de series
 
     def __init__(self):
@@ -86,16 +100,20 @@ class Game_management: #Agregar aqui funcionalidades de juegos
         self.games = File_manager.load_game()
 
 def add(): #ARREGLAR ESTO, NO SE QUE HACE ERROR
-    print("Elige una opcion a agregar:\n 1. Pelicula\n 2. Serie \n 3. Videojuego\n")
-    opcion = int(input())
-    if opcion == '1':
-        add_movies()
-    elif opcion == '2':
-        print()
-    elif opcion == '3':
-        print()
+    while True:
+        print("Elige una opcion a agregar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        opcion = int(input())
+        if opcion == 1:
+            add_movies()
+        elif opcion == 2:
+            print()
+        elif opcion == 3:
+            print()
+        else:
+            print("Ingresa una opcion valida")
 
 def add_movies(): #FUNCIONA, realizar uno para cada tipo
+    #Añadir restricciones
     title = input("Ingresa el titulo que quieras agregar:\n")
     management = Movie_management()
     existence = management.existence_movie(title)
@@ -109,5 +127,29 @@ def add_movies(): #FUNCIONA, realizar uno para cada tipo
         comment = input("Agrega algun comentario:\n")
         to_add_movie = Movie(title,status,duration,year,rating,comment)
         management.add_movie(to_add_movie)
-add_movies()
+
+def search_movies():#Permite buscar peliculas que esten guardadas en el json
+    title = input("Ingresa el titulo de la pelicula que buscas:\n")
+    management = Movie_management()
+    print(management.search_movie(title))
+
+def delete_movies():#Permite eliminar las peliculas
+    title = input("Ingresa el titulo de la pelicula que quieres eliminar:\n")
+    management = Movie_management()
+    existence = management.existence_movie(title)
+    if existence is True:
+        movie = management.search_movie(title)
+        management.delete_movie(movie)
+    else:
+        print("La pelicula no se encuentra guardada")
+
+def show_movies():#Muestra el listado de peliculas guardadas
+    print("------Peliculas------")
+    managament = Movie_management()
+    managament.show_saved_movies()
+    print("------Fin del listado------")
+
+show_movies()
+    
+
 
