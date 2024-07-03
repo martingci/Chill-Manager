@@ -1,5 +1,6 @@
 import json
 
+#Manejo de archivos.
 class File_manager:
 
     @staticmethod
@@ -16,6 +17,7 @@ class File_manager:
         except FileNotFoundError:
             return []
 
+#Definición de clase y herencias.
 class Entertainment:
     def __init__(self, title, status, rating, comment):
         self.title = title
@@ -23,6 +25,16 @@ class Entertainment:
         self.rating = rating
         self.comment = comment
 
+class Movies(Entertainment):
+    def __init__(self, title, status, rating, comment, duration, year):
+        super().__init__(title, status, rating, comment)
+        self.duration = duration
+        self.year = year
+        self.type = "Pelicula"
+
+    def __str__(self):
+        return f"{self.title};{self.status};{self.duration};{self.year};{self.rating};{self.comment}"
+    
 class Series(Entertainment):
     def __init__(self, title, status, rating, comment, total_seasons, current_seasons, current_episode):
         super().__init__(title, status, rating, comment)
@@ -34,16 +46,6 @@ class Series(Entertainment):
     def __str__(self):
         return f"{self.title};{self.status};{self.comment};{self.total_seasons};{self.current_seasons};{self.current_episode};{self.rating}"
 
-class Movies(Entertainment):
-    def __init__(self, title, status, rating, comment, duration, year):
-        super().__init__(title, status, rating, comment)
-        self.duration = duration
-        self.year = year
-        self.type = "Película"
-
-    def __str__(self):
-        return f"{self.title};{self.status};{self.duration};{self.year};{self.rating};{self.comment}"
-
 class Games(Entertainment):
     def __init__(self, title, status, rating, comment, year, dlc):
         super().__init__(title, status, rating, comment)
@@ -54,70 +56,123 @@ class Games(Entertainment):
     def __str__(self):
         return f"{self.title};{self.status};{self.year};{self.dlc};{self.rating};{self.comment}"
 
-class Movie_management: #Agregar aqui funcionalidades de movies
+#Funciones para el manejo de cada clase, se diferencian al no tener la "s" finalizando la palabra de la categoría y contener "saved".
+class Movie_management:
 
     def __init__(self):
         self.movies = File_manager.load_json(Movies, "movies.json")
     
-    def add_movie(self, movie):
+    def save_movie(self, movie): #Función para guardar en el archivo json.
         self.movies.append(movie)
         File_manager.save_json(self.movies, "movies.json")
         print("La pelicula se ha guardado correctamente")
     
-    def existence_movie(self, title):
+    def existence_movie(self, title): #Función para comprobar existencia, se utiliza para cada clase.
         for movie in self.movies:
             if movie.title == title:
                 return True
         return False
     
-    def search_movie(self, title):
+    def search_saved_movie(self, title):
         for movie in self.movies:
              if movie.title == title:
                 return movie
         else:
             return None
     
-    def delete_movie(self, movie):
+    def del_saved_movie(self, movie):
         self.movies.remove(movie)
         File_manager.save_json(self.movies, "movies.json")
         print("Pelicula eliminada correctamente")
 
-    def show_saved_movies(self):
+    def show_saved_movie(self):
         for movie in self.movies:
             print(movie)
             print("----------")
 
-class Serie_management: #Agregar aqui funcionalidades de series
+class Serie_management:
 
     def __init__(self):
         self.series = File_manager.load_json(Series, "series.json")
+    
+    def save_serie(self, serie):
+        self.series.append(serie)
+        File_manager.save_json(self.series, "series.json")
+        print("La serie se ha guardado correctamente")
+    
+    def existence_serie(self, title):
+        for serie in self.series:
+            if serie.title == title:
+                return True
+        return False
+    
+    def search_saved_serie(self, title):
+        for serie in self.series:
+             if serie.title == title:
+                return serie
+        else:
+            return None
+    
+    def del_saved_serie(self, serie):
+        self.series.remove(serie)
+        File_manager.save_json(self.series, "series.json")
+        print("Serie eliminada correctamente")
 
-class Game_management: #Agregar aqui funcionalidades de juegos
+    def show_saved_serie(self):
+        for serie in self.series:
+            print(serie)
+            print("----------")
+
+class Game_management:
     
     def __init__(self):
         self.games = File_manager.load_json(Games, "games.json")
+    
+    def save_game(self, game):
+        self.games.append(game)
+        File_manager.save_json(self.games, "games.json")
+        print("El videojuego se ha guardado correctamente")
+    
+    def existence_game(self, title):
+        for game in self.games:
+            if game.title == title:
+                return True
+        return False
+    
+    def search_saved_game(self, title):
+        for game in self.games:
+             if game.title == title:
+                return game
+        else:
+            return None
+    
+    def del_saved_game(self, game):
+        self.games.remove(game)
+        File_manager.save_json(self.games, "games.json")
+        print("Videojuego eliminada correctamente")
 
+    def show_saved_game(self):
+        for game in self.games:
+            print(game)
+            print("----------")
 
-
-
-
-
-
-def add(): #ARREGLAR ESTO, NO SE QUE HACE ERROR
+#Elección de la categoría de actividad que se quiere agregar.
+def choose_to_add():
     while True:
         print("Elige una opcion a agregar:\n1. Pelicula\n2. Serie\n3. Videojuego")
         opcion = int(input())
         if opcion == 1:
             add_movies()
         elif opcion == 2:
-            print()
+            add_series()
         elif opcion == 3:
-            print()
+            add_games()
         else:
             print("Ingresa una opcion valida")
 
-def add_movies(): #FUNCIONA, realizar uno para cada tipo
-    #Añadir restricciones
+#Funciones que llaman a las propias de cada clase.
+#Películas.
+def add_movies(): #Pregunta los datos de la película que se quiere agregar, comprobando su existencia primero.
     title = input("Ingresa el titulo que quieras agregar:\n")
     management = Movie_management()
     existence = management.existence_movie(title)
@@ -130,28 +185,30 @@ def add_movies(): #FUNCIONA, realizar uno para cada tipo
         rating = input("Tu valoracion (del 1 al 10):\n")
         comment = input("Agrega algun comentario:\n")
         to_add_movie = Movies(title, status, rating, comment, duration, year)
-        management.add_movie(to_add_movie)
+        management.save_movie(to_add_movie)
 
-def search_movies():#Permite buscar peliculas que esten guardadas en el json
+def search_movies(): #Permite buscar una pelicula.
     title = input("Ingresa el titulo de la pelicula que buscas:\n")
     management = Movie_management()
-    print(management.search_movie(title))
+    print(management.search_saved_movie(title))
 
-def delete_movies():#Permite eliminar las peliculas
+def del_movies(): #Permite eliminar una pelicula.
     title = input("Ingresa el titulo de la pelicula que quieres eliminar:\n")
     management = Movie_management()
     existence = management.existence_movie(title)
     if existence is True:
-        movie = management.search_movie(title)
-        management.delete_movie(movie)
+        movie = management.search_saved_movie(title)
+        management.del_saved_movie(movie)
     else:
         print("La pelicula no se encuentra guardada")
 
-def show_movies():#Muestra el listado de peliculas guardadas
+def show_movies(): #Muestra el listado de peliculas guardadas.
     print("------Peliculas------")
     management = Movie_management()
-    management.show_saved_movies()
+    management.show_saved_movie()
     print("------Fin del listado------")
 
+#Series.
 
-show_movies()
+
+#Videojuegos.
