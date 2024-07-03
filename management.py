@@ -172,6 +172,7 @@ def choose_to_add():
 
 #Funciones que llaman a las propias de cada clase.
 #Películas.
+
 def add_movies(): #Pregunta los datos de la película que se quiere agregar, comprobando su existencia primero.
     title = input("Ingresa el titulo que quieras agregar:\n")
     management = Movie_management()
@@ -179,7 +180,7 @@ def add_movies(): #Pregunta los datos de la película que se quiere agregar, com
     if existence is True:
         print("La pelicula ya se encuentra agregada.")
     else:
-        status = input("Escribe el estado:\n")
+        status = input("Escribe el estado de visualización:\n")
         duration = input("Escribe cuanto dura:\n")
         year = input("Escribe el año de lanzamiento:\n")
         rating = input("Tu valoracion (del 1 al 10):\n")
@@ -210,5 +211,42 @@ def show_movies(): #Muestra el listado de peliculas guardadas.
 
 #Series.
 
+def add_series(): #Pregunta los datos de la serie que se quiere agregar, comprobando su existencia primero.
+    title = input("Ingresa el titulo que quieras agregar:\n")
+    management = Serie_management()
+    existence = management.existence_serie(title)
+    if existence is True:
+        print("La serie ya se encuentra agregada.")
+    else:
+        status = input("Escribe el estado de visualización:\n")
+        rating = int(input("Tu valoracion (del 1 al 10):\n"))
+        comment = input("Agrega algun comentario:\n")
+        total_seasons = input("Ingrese la cantidad de temporadas que tiene: \n")
+        current_season = input("Ingrese la temporada en la que se encuentra: \n")
+        current_episode = input("Ingrese el episodio en el que se encuentra: \n")
+        to_add_serie = Series(title, status, rating, comment, total_seasons, current_season, current_episode)
+        management.save_serie(to_add_serie)
+
+def search_series(): #Permite buscar una serie.
+    title = input("Ingresa el titulo de la serie que buscas:\n")
+    management = Serie_management()
+    print(management.search_saved_serie(title))
+
+def del_series(): #Permite eliminar una serie.
+    title = input("Ingresa el titulo de la serie que quieres eliminar:\n")
+    management = Serie_management()
+    existence = management.existence_serie(title)
+    if existence is True:
+        serie = management.search_saved_movie(title)
+        management.del_saved_serie(serie)
+    else:
+        print("La serie no se encuentra guardada")
+
+def show_movies(): #Muestra el listado de series guardadas.
+    print("------Series------")
+    management = Serie_management()
+    management.show_saved_serie()
+    print("------Fin del listado------")
 
 #Videojuegos.
+
