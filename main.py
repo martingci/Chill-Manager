@@ -504,8 +504,6 @@ def menu():
             choose_to_update()
         elif opt == '6':
             break
-        else:
-            print("Por favor, ingrese una opción válida.")
 
 def read_option():
     while True:
