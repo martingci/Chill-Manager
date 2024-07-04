@@ -74,7 +74,7 @@ class Movie_management:
     def save_movie(self, movie): #Función para guardar en el archivo json.
         self.movies.append(movie)
         File_manager.save_json(self.movies, "movies.json")
-        print("La pelicula se ha guardado correctamente")
+        print("La película se ha guardado correctamente")
     
     def existence_movie(self, title): #Función para comprobar existencia, se utiliza para cada clase.
         for movie in self.movies:
@@ -92,14 +92,14 @@ class Movie_management:
     def del_saved_movie(self, movie):
         self.movies.remove(movie)
         File_manager.save_json(self.movies, "movies.json")
-        print("Pelicula eliminada correctamente")
+        print("Película eliminada correctamente")
 
     def show_saved_movie(self):
         for movie in self.movies:
             print(movie)
             print("----------")
     
-    def update_movie(self, title, attribute, value): #Permite actualizar las peliculas, un atributo en especifico
+    def update_movie(self, title, attribute, value): #Permite actualizar las películas, un atributo en especifico
         movie = self.search_saved_movie(title)
         movie.update(attribute, value)
         File_manager.save_json(self.movies, "movies.json")
@@ -197,41 +197,9 @@ def choose_to_add():
         else:
             print("Por favor, ingrese una opción válida.")
 
-def menu():
-    while True:
-        print("----Chill Manager----")
-        print("Seleccione una opcion:")
-        print("1. Agregar una pelicula, serie o videojuego")
-        print("2. Buscar una pelicula, serie o videojuego")
-        print("3. Eliminar una pelicula, serie o videojuego")
-        print("4. Ver listado de peliculas, serie y/o videojuegos")
-        print("5. Actualizar una pelicula, serie o videojuego")
-        print("6. Cerrar menu")
-        opt = read_option()
-        if opt == '1':
-            choose_to_add()
-        elif opt == '2':
-            choose_to_search()
-        elif opt == '3':
-            choose_to_del()
-        elif opt == '4':
-            choose_to_show()
-        elif opt == '5':
-            choose_to_update()
-        elif opt == '6':
-            break
-
-def read_option():
-    while True:
-        opt = input("Seleccione una opción: ")
-        if int(opt) >=1 and int(opt) <=5:
-            return opt
-        else: 
-            print("Por favor, ingrese una opción válida.")
-
 def choose_to_del():
     while True:
-        print("Selecciona una opcion a eliminar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        print("Selecciona una opcion a eliminar:\n1. Película\n2. Serie\n3. Videojuego")
         opcion = int(input())
         if opcion == 1:
             del_movies()
@@ -244,7 +212,7 @@ def choose_to_del():
     
 def choose_to_show():
     while True:
-        print("Seleccione una opcion a mostrar:\n1. Pelicula\n2. Serie\n3. Videojuego\n4.Todo")
+        print("Seleccione una opcion a mostrar:\n1. Película\n2. Serie\n3. Videojuego\n4.Todo")
         opcion = int(input())
         if opcion == 1:
             show_movies()
@@ -259,7 +227,7 @@ def choose_to_show():
 
 def choose_to_update():
     while True:
-        print("Seleccione una opcion a actualizar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        print("Seleccione una opcion a actualizar:\n1. Película\n2. Serie\n3. Videojuego")
         opcion = int(input())
         if opcion == 1:
             update_movies()
@@ -272,7 +240,7 @@ def choose_to_update():
 
 def choose_to_search():
     while True:
-        print("Seleccione una opcion a buscar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        print("Seleccione una opcion a buscar:\n1. Película\n2. Serie\n3. Videojuego")
         opcion = int(input())
         if opcion == 1:
             search_movies()
@@ -282,7 +250,6 @@ def choose_to_search():
             search_games()
         else:
             print("Por favor, ingrese una opción válida.")
-
 
 #Funciones que llaman a las propias de cada clase.
 #Películas.
@@ -302,12 +269,12 @@ def add_movies(): #Pregunta los datos de la película que se quiere agregar, com
         to_add_movie = Movies(title, status, rating, comment, duration, year)
         management.save_movie(to_add_movie)
 
-def search_movies(): #Permite buscar una pelicula.
+def search_movies(): #Permite buscar una película.
     title = input("Ingrese el título de la película que busca: \n")
     management = Movie_management()
     print(management.search_saved_movie(title))
 
-def del_movies(): #Permite eliminar una pelicula.
+def del_movies(): #Permite eliminar una película.
     title = input("Ingrese el título de la película que quiera eliminar: \n")
     management = Movie_management()
     existence = management.existence_movie(title)
@@ -317,13 +284,13 @@ def del_movies(): #Permite eliminar una pelicula.
     else:
         print("La película no se encuentra guardada.")
 
-def show_movies(): #Muestra el listado de peliculas guardadas.
+def show_movies(): #Muestra el listado de películas guardadas.
     print("------Películas------")
     management = Movie_management()
     management.show_saved_movie()
     print("------Fin del listado------")
 
-def update_movies():#Permite actualiar valores de atributos de las peliculas guardadas.
+def update_movies():#Permite actualiar valores de atributos de las películas guardadas.
     title = input("Ingrese el título de la película que quiera modificar: \n")
     management = Movie_management()
     existence = management.existence_movie(title)
@@ -435,7 +402,6 @@ def add_games(): #Pregunta los datos del videojuego que se quiere agregar, compr
         print("El videojuego ya se encuentra agregado.")
     else:
         status = input("Ingrese el estado de visualización: \n")
-        duration = input("Ingrese la duración de la película: (Formato: Xh Xmin): \n")
         year = input("Ingrese el año de lanzamiento: \n")
         dlc = input("Ingrese el dlc que posee (Dejar vacío si no aplica): \n")
         rating = input("Ingrese la valoración (del 1 al 10): \n")
@@ -493,3 +459,38 @@ def update_games():#Permite actualiar valores de atributos de los videojuegos gu
             print("Por favor, ingrese una opción válida.")
     else:
         print("El videojuego no existe.")
+
+#Menú
+def menu():
+    while True:
+        print("----Chill Manager----")
+        print("Seleccione una opcion:")
+        print("1. Agregar una película, serie o videojuego.")
+        print("2. Buscar una película, serie o videojuego.")
+        print("3. Eliminar una película, serie o videojuego.")
+        print("4. Ver listado de películas, serie y/o videojuegos.")
+        print("5. Actualizar una película, serie o videojuego.")
+        print("6. Salir del menú.")
+        opt = read_option()
+        if opt == '1':
+            choose_to_add()
+        elif opt == '2':
+            choose_to_search()
+        elif opt == '3':
+            choose_to_del()
+        elif opt == '4':
+            choose_to_show()
+        elif opt == '5':
+            choose_to_update()
+        elif opt == '6':
+            break
+        else:
+            print("Por favor, ingrese una opción válida.")
+
+def read_option():
+    while True:
+        opt = input("Seleccione una opción: ")
+        if int(opt) >=1 and int(opt) <=6:
+            return opt
+        else: 
+            print("Por favor, ingrese una opción válida.")
