@@ -353,7 +353,7 @@ def add_games(): #Pregunta los datos del videojuego que se quiere agregar, compr
         dlc = input("Ingrese el dlc que posee (Dejar vacío si no aplica): \n")
         rating = input("Ingrese la valoración (del 1 al 10): \n")
         comment = input("Ingrese un comentario: \n")
-        to_add_game = Games(title, status, rating, comment, duration, year)
+        to_add_game = Games(title, status, rating, comment, year, dlc)
         management.save_game(to_add_game)
 
 def search_games(): #Permite buscar un videojuego.
@@ -382,7 +382,7 @@ def update_games():#Permite actualiar valores de atributos de los videojuegos gu
     management = Game_management()
     existence = management.existence_game(title)
     if existence is True:
-        print("¿Qué quiere modificar?:\n1.Título.\n2.Estado.\n3.Año de lanzamiento.\n4.Valoración.\n5.Comentario.")
+        print("¿Qué quiere modificar?:\n1.Título.\n2.Estado.\n3.Año de lanzamiento.\n4.Dlc's.\n5.Valoración.\n6.Comentario.")
         opt = int(input())
         if opt == 1:
             new_title = input("Nuevo título: \n")
@@ -394,9 +394,12 @@ def update_games():#Permite actualiar valores de atributos de los videojuegos gu
             new_year = input("Nuevo año de lanzamiento: \n")
             management.update_game(title,attribute= "year", value = new_year)
         elif opt == 4:
+            new_dlc = input("Nuevo dato de dlc: \n")
+            management.update_game(title,attribute= "dlc", value = new_dlc)
+        elif opt == 5:
             new_rating = int(input("Nueva valoración: \n"))
             management.update_game(title,attribute= "rating",value=new_rating)
-        elif opt == 5:
+        elif opt == 6:
             new_comment = input("Nuevo comentario: \n")
             management.update_game(title,attribute="comment",value = new_comment)
         else:
