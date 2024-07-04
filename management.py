@@ -24,6 +24,7 @@ class Entertainment:
         self.status = status
         self.rating = rating
         self.comment = comment
+    
 
 class Movies(Entertainment):
     def __init__(self, title, status, rating, comment, duration, year):
@@ -34,6 +35,9 @@ class Movies(Entertainment):
 
     def __str__(self):
         return f"{self.title};{self.status};{self.duration};{self.year};{self.rating};{self.comment}"
+    
+    def update(self, attribute, value):
+            setattr(self,attribute,value) #Cambia el atributo indicado por el valor
     
 class Series(Entertainment):
     def __init__(self, title, status, rating, comment, total_seasons, current_seasons, current_episode):
@@ -89,6 +93,12 @@ class Movie_management:
         for movie in self.movies:
             print(movie)
             print("----------")
+    
+    def update_movie(self, title, attribute, value): #Permite actualizar las peliculas, un atributo en especifico
+        movie = self.search_saved_movie(title)
+        movie.update(attribute, value)
+        File_manager.save_json(self.movies, "movies.json")
+        print("Se ha actualizado el atributo correctamente")
 
 class Serie_management:
 
@@ -209,6 +219,35 @@ def show_movies(): #Muestra el listado de peliculas guardadas.
     management.show_saved_movie()
     print("------Fin del listado------")
 
+def update_movies():#Permite actualiar valores de atributos de las peliculas guardadas
+    title = input("Ingresa el titulo que quieras modificar:\n")
+    management = Movie_management()
+    existence = management.existence_movie(title)
+    if existence is True:
+        print("Que quieres modificar:\n1.Titulo\n2.Estado\n3.Año de lanzamiento\n4.Valoracion\n5.Commentario")
+        opt = int(input())
+        if opt == 1:
+            new_title = input("Nuevo titulo:\n")
+            management.update_movie(title,attribute = "title",value= new_title)
+        elif opt == 2:
+            new_status = input("Nuevo estado:\n")
+            management.update_movie(title,attribute= "status", value = new_status)
+        elif opt == 3:
+            new_year = input("Nuevo año de lanzamiento:\n")
+            management.update_movie(title,attribute= "year", value = new_year)
+        elif opt == 4:
+            new_rating = int(input("Nueva valoracion:\n"))
+            management.update_movie(title,attribute= "rating",value=new_rating)
+        elif opt == 5:
+            new_comment = input("Nuevo comentario:\n")
+            management.update_movie(title,attribute="comment",value = new_comment)
+        else:
+            print("Ingresa opcion correcta")
+    else:
+        print("La pelicula no existe")
+            
+
+update_movies()
 #Series.
 
 def add_series(): #Pregunta los datos de la serie que se quiere agregar, comprobando su existencia primero.
