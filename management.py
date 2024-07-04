@@ -197,6 +197,93 @@ def choose_to_add():
         else:
             print("Por favor, ingrese una opción válida.")
 
+def menu():
+    while True:
+        print("----Chill Manager----")
+        print("Seleccione una opcion:")
+        print("1. Agregar una pelicula, serie o videojuego")
+        print("2. Buscar una pelicula, serie o videojuego")
+        print("3. Eliminar una pelicula, serie o videojuego")
+        print("4. Ver listado de peliculas, serie y/o videojuegos")
+        print("5. Actualizar una pelicula, serie o videojuego")
+        print("6. Cerrar menu")
+        opt = read_option()
+        if opt == '1':
+            choose_to_add()
+        elif opt == '2':
+            choose_to_search()
+        elif opt == '3':
+            choose_to_del()
+        elif opt == '4':
+            choose_to_show()
+        elif opt == '5':
+            choose_to_update()
+        elif opt == '6':
+            break
+
+def read_option():
+    while True:
+        opt = input("Seleccione una opción: ")
+        if int(opt) >=1 and int(opt) <=5:
+            return opt
+        else: 
+            print("Por favor, ingrese una opción válida.")
+
+def choose_to_del():
+    while True:
+        print("Selecciona una opcion a eliminar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        opcion = int(input())
+        if opcion == 1:
+            del_movies()
+        elif opcion == 2:
+            del_series()
+        elif opcion == 3:
+            del_games()
+        else:
+            print("Por favor, ingrese una opción válida.")
+    
+def choose_to_show():
+    while True:
+        print("Seleccione una opcion a mostrar:\n1. Pelicula\n2. Serie\n3. Videojuego\n4.Todo")
+        opcion = int(input())
+        if opcion == 1:
+            show_movies()
+        elif opcion == 2:
+            show_series()
+        elif opcion == 3:
+            show_games()
+        elif opcion == 4:
+            show_everything()
+        else:
+            print("Por favor, ingrese una opción válida.")
+
+def choose_to_update():
+    while True:
+        print("Seleccione una opcion a actualizar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        opcion = int(input())
+        if opcion == 1:
+            update_movies()
+        elif opcion == 2:
+            update_series()
+        elif opcion == 3:
+            update_games()
+        else:
+            print("Por favor, ingrese una opción válida.")
+
+def choose_to_search():
+    while True:
+        print("Seleccione una opcion a buscar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        opcion = int(input())
+        if opcion == 1:
+            search_movies()
+        elif opcion == 2:
+            search_series()
+        elif opcion == 3:
+            search_games()
+        else:
+            print("Por favor, ingrese una opción válida.")
+
+
 #Funciones que llaman a las propias de cada clase.
 #Películas.
 
