@@ -50,6 +50,9 @@ class Series(Entertainment):
     def __str__(self):
         return f"{self.title};{self.status};{self.comment};{self.total_seasons};{self.current_seasons};{self.current_episode};{self.rating}"
 
+    def update(self, attribute, value):
+            setattr(self,attribute,value)
+        
 class Games(Entertainment):
     def __init__(self, title, status, rating, comment, year, dlc):
         super().__init__(title, status, rating, comment)
@@ -59,6 +62,9 @@ class Games(Entertainment):
 
     def __str__(self):
         return f"{self.title};{self.status};{self.year};{self.dlc};{self.rating};{self.comment}"
+
+    def update(self, attribute, value):
+            setattr(self,attribute,value)
 
 #Funciones para el manejo de cada clase, se diferencian al no tener la "s" finalizando la palabra de la categoría y contener "saved".
 class Movie_management:
@@ -132,6 +138,12 @@ class Serie_management:
         for serie in self.series:
             print(serie)
             print("----------")
+    
+    def update_serie(self,title,attribute,value):
+        serie = self.search_saved_serie(title)
+        serie.update(attribute, value)
+        File_manager.save_json(self.series, "series.json")
+        print("Se ha actualizado el atributo correctamente")
 
 class Game_management:
     
@@ -165,6 +177,12 @@ class Game_management:
         for game in self.games:
             print(game)
             print("----------")
+    
+    def update_game(self,title,attribute,value):
+        game = self.search_saved_game(title)
+        game.update(attribute, value)
+        File_manager.save_json(self.games, "games.json")
+        print("Se ha actualizado el atributo correctamente")
 
 #Elección de la categoría de actividad que se quiere agregar.
 def choose_to_add():
@@ -281,11 +299,13 @@ def del_series(): #Permite eliminar una serie.
     else:
         print("La serie no se encuentra guardada")
 
-def show_movies(): #Muestra el listado de series guardadas.
+def show_series(): #Muestra el listado de series guardadas.
     print("------Series------")
     management = Serie_management()
     management.show_saved_serie()
     print("------Fin del listado------")
+
+
 
 #Videojuegos.
 
