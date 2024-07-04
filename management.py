@@ -184,7 +184,7 @@ class Game_management:
         File_manager.save_json(self.games, "games.json")
         print("Se ha actualizado el atributo correctamente")
 
-#Elección de la categoría de actividad que se quiere agregar.
+#Elección de la categoría de actividad 
 def choose_to_add():
     while True:
         print("Elige una opcion a agregar:\n1. Pelicula\n2. Serie\n3. Videojuego")
@@ -195,6 +195,60 @@ def choose_to_add():
             add_series()
         elif opcion == 3:
             add_games()
+        else:
+            print("Ingresa una opcion valida")
+
+def choose_to_search():
+    while True:
+        print("Elige una opcion para buscar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        opcion = int(input())
+        if opcion == 1:
+            search_movies()
+        elif opcion == 2:
+            search_series()
+        elif opcion == 3:
+            search_games()
+        else:
+            print("Ingresa una opcion valida")
+
+def choose_to_del():
+    while True:
+        print("Elige una opcion a eliminar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        opcion = int(input())
+        if opcion == 1:
+            del_movies()
+        elif opcion == 2:
+            del_series()
+        elif opcion == 3:
+            del_games()
+        else:
+            print("Ingresa una opcion valida")
+    
+def choose_to_show():
+    while True:
+        print("Elige una opcion a mostrar:\n1. Pelicula\n2. Serie\n3. Videojuego\n4.Todo")
+        opcion = int(input())
+        if opcion == 1:
+            show_movies()
+        elif opcion == 2:
+            show_series()
+        elif opcion == 3:
+            show_games()
+        elif opcion == 4:
+            show_everything()
+        else:
+            print("Ingresa una opcion valida")
+
+def choose_to_update():
+    while True:
+        print("Elige una opcion a actualizar:\n1. Pelicula\n2. Serie\n3. Videojuego")
+        opcion = int(input())
+        if opcion == 1:
+            update_movies()
+        elif opcion == 2:
+            update_series()
+        elif opcion == 3:
+            update_games()
         else:
             print("Ingresa una opcion valida")
 
@@ -237,12 +291,12 @@ def show_movies(): #Muestra el listado de peliculas guardadas.
     management.show_saved_movie()
     print("------Fin del listado------")
 
-def update_movies():#Permite actualiar valores de atributos de las peliculas guardadas
+def update_movies():#Permite actualizar valores de atributos de las peliculas guardadas
     title = input("Ingresa el titulo que quieras modificar:\n")
     management = Movie_management()
     existence = management.existence_movie(title)
     if existence is True:
-        print("Que quieres modificar:\n1.Titulo\n2.Estado\n3.Año de lanzamiento\n4.Valoracion\n5.Commentario")
+        print("Que quieres modificar:\n1.Titulo\n2.Estado\n3.Año de lanzamiento\n4.Valoracion\n5.Comentario\n6.Duracion")
         opt = int(input())
         if opt == 1:
             new_title = input("Nuevo titulo:\n")
@@ -259,6 +313,9 @@ def update_movies():#Permite actualiar valores de atributos de las peliculas gua
         elif opt == 5:
             new_comment = input("Nuevo comentario:\n")
             management.update_movie(title,attribute="comment",value = new_comment)
+        elif opt == 6:
+            new_duration = input("Nueva duracion:\n")
+            management.update_movie(title,attribute="duration",value=new_duration)
         else:
             print("Ingresa opcion correcta")
     else:
@@ -305,7 +362,41 @@ def show_series(): #Muestra el listado de series guardadas.
     management.show_saved_serie()
     print("------Fin del listado------")
 
-
+def update_series():
+    title = input("Ingresa el titulo que quieras modificar:\n")
+    management = Serie_management()
+    existence = management.existence_serie(title)
+    if existence is True:
+        print("Que quieres modificar:\n1.Titulo\n2.Estado\n3.Año de lanzamiento\n4.Valoracion\n5.Comentario\n6.Temporadas\n7.Temporada actual\n8.Episodio actual")
+        opt = int(input())
+        if opt == 1:
+            new_title = input("Nuevo titulo:\n")
+            management.update_serie(title,attribute = "title",value= new_title)
+        elif opt == 2:
+            new_status = input("Nuevo estado:\n")
+            management.update_serie(title,attribute= "status", value = new_status)
+        elif opt == 3:
+            new_year = input("Nuevo año de lanzamiento:\n")
+            management.update_serie(title,attribute= "year", value = new_year)
+        elif opt == 4:
+            new_rating = int(input("Nueva valoracion:\n"))
+            management.update_serie(title,attribute= "rating",value=new_rating)
+        elif opt == 5:
+            new_comment = input("Nuevo comentario:\n")
+            management.update_serie(title,attribute="comment",value = new_comment)
+        elif opt == 6:
+            new_total_seasons = input("Nueva cantidad de temporadas:\n")
+            management.update_serie(title,attribute="total_seasons",value=new_total_seasons)
+        elif opt == 7:
+            new_current_seasons = input("Actualizacion progreso:\n")
+            management.update_serie(title,attribute="current_seasons",value=new_current_seasons)
+        elif opt == 8:
+            new_current_episode = input("Actualizacion progreso:\n")
+            management.update_serie(title,attribute="current_episode",value=new_current_episode)
+        else:
+            print("Ingresa opcion correcta")
+    else:
+        print("La serie no existe")
 
 #Videojuegos.
 
